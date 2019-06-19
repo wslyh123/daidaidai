@@ -57,20 +57,21 @@ public class blasphemyUtil {
 
     private static boolean calculateOne (int damage, List<Servant> one, int maxSize) {
         boolean death = false;
-        int newmaster = 0;
         for (Servant servant : one) {
-            if (servant.isShield()) {
+            if (!servant.isShield()) {
+                servant.setHp(servant.getHp() - damage);
+            } else {
                 servant.setShield(false);
-                continue;
-            }
-            servant.setHp(servant.getHp() - damage);
-            if (servant.isMaster() && servant.getHp() > 0) {
-                newmaster ++;
             }
         }
-        for (int i = 1; i <= newmaster; i ++) {
-            if (one.size() < maxSize) {
-                one.add(new Servant(3, 0, false, true));
+        for (int i = 0; i <= maxSize - 1; i ++) {
+            if (i >= one.size()) {
+                break;
+            }
+            Servant servant = one.get(i);
+            if (servant.isMaster() && servant.getHp() > 0 && one.size() < maxSize) {
+                i ++;
+                one.add(i, new Servant(3, 0, false, true));
             }
         }
         for (int i = 0; i <= maxSize - 1; i ++) {
@@ -113,6 +114,6 @@ public class blasphemyUtil {
         enemy.add(new Servant(8, 0, false, false));
         enemy.add(new Servant(15, 0, false, false));
         boolean flag = calculate(new Test(1, oneself, enemy));
-        System.out.println(enemy);
+        System.out.println(oneself);
     }
 }
