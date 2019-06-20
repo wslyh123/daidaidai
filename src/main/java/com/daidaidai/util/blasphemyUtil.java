@@ -8,6 +8,16 @@ import java.util.List;
 
 public class blasphemyUtil {
 
+    private static final int MAXSIZE = 7;
+
+    private static final int MAXNUM = 14;
+
+    private static final int XIEDUDAMAGE = 1;
+
+    private static final int DAIDAIDAIDAMAGE = 2;
+
+    private static final int MASTERHP = 3;
+
     public static boolean calculate (Test test) {
         int type = test.getType();
         List<Servant> oneself = test.getOneself();
@@ -22,12 +32,12 @@ public class blasphemyUtil {
     }
 
     private static boolean xiedu (List<Servant> oneself, List<Servant> enemy) {
-        int count = 14;
+        int count = MAXNUM;
         boolean death = false;
         do {
-            int damage = 1 + getSpellPower(oneself);
-            boolean b1 = calculateOne(damage, oneself, 7);
-            boolean b2 = calculateOne(damage, enemy, 7);
+            int damage = XIEDUDAMAGE + getSpellPower(oneself);
+            boolean b1 = calculateOne(damage, oneself);
+            boolean b2 = calculateOne(damage, enemy);
             death = b1 || b2;
             count --;
         } while (death && count >= 1);
@@ -35,12 +45,12 @@ public class blasphemyUtil {
     }
 
     private static boolean daidaidai (List<Servant> oneself, List<Servant> enemy) {
-        int count = 14;
+        int count = MAXNUM;
         boolean death = false;
-        int damage = 2;
+        int damage = DAIDAIDAIDAMAGE;
         do {
-            boolean b1 = calculateOne(damage, oneself, 7);
-            boolean b2 = calculateOne(damage, enemy, 7);
+            boolean b1 = calculateOne(damage, oneself);
+            boolean b2 = calculateOne(damage, enemy);
             death = b1 || b2;
             count --;
         } while (death && count >= 1);
@@ -55,7 +65,7 @@ public class blasphemyUtil {
         return sp;
     }
 
-    private static boolean calculateOne (int damage, List<Servant> one, int maxSize) {
+    private static boolean calculateOne (int damage, List<Servant> one) {
         boolean death = false;
         for (Servant servant : one) {
             if (!servant.isImmunity()) {
@@ -66,17 +76,17 @@ public class blasphemyUtil {
                 }
             }
         }
-        for (int i = 0; i <= maxSize - 1; i ++) {
+        for (int i = 0; i <= MAXSIZE - 1; i ++) {
             if (i >= one.size()) {
                 break;
             }
             Servant servant = one.get(i);
-            if (servant.isMaster() && servant.getHp() > 0 && one.size() < maxSize) {
+            if (servant.isMaster() && servant.getHp() > 0 && one.size() < MAXSIZE) {
                 i ++;
-                one.add(i, new Servant(3, 0, false, true));
+                one.add(i, new Servant(MASTERHP, 0, false, true));
             }
         }
-        for (int i = 0; i <= maxSize - 1; i ++) {
+        for (int i = 0; i <= MAXSIZE - 1; i ++) {
             if (i > one.size() - 1) {
                 break;
             }
@@ -91,7 +101,7 @@ public class blasphemyUtil {
                     int j = 0;
                     one.set(i, child.get(j));
                     if (child.size() > 1) {
-                        while (one.size() < maxSize) {
+                        while (one.size() < MAXSIZE) {
                             i ++;
                             j ++;
                             one.add(i, child.get(j));
@@ -100,8 +110,6 @@ public class blasphemyUtil {
                 }
             }
         }
-
-
         return death;
     }
 
