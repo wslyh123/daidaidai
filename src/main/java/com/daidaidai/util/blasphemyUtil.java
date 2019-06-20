@@ -39,7 +39,7 @@ public class blasphemyUtil {
         boolean death = false;
         int damage = 2;
         do {
-            boolean b1 = calculateOne(damage, oneself, 6);
+            boolean b1 = calculateOne(damage, oneself, 7);
             boolean b2 = calculateOne(damage, enemy, 7);
             death = b1 || b2;
             count --;
@@ -58,10 +58,12 @@ public class blasphemyUtil {
     private static boolean calculateOne (int damage, List<Servant> one, int maxSize) {
         boolean death = false;
         for (Servant servant : one) {
-            if (!servant.isShield()) {
-                servant.setHp(servant.getHp() - damage);
-            } else {
-                servant.setShield(false);
+            if (!servant.isImmunity()) {
+                if (!servant.isShield()) {
+                    servant.setHp(servant.getHp() - damage);
+                } else {
+                    servant.setShield(false);
+                }
             }
         }
         for (int i = 0; i <= maxSize - 1; i ++) {

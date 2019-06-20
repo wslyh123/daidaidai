@@ -8,6 +8,8 @@ public class Servant {
 
     private int spellPower;
 
+    private boolean immunity;
+
     private boolean shield;
 
     private boolean master;
@@ -72,11 +74,20 @@ public class Servant {
         this.child = child;
     }
 
+    public boolean isImmunity() {
+        return immunity;
+    }
+
+    public void setImmunity(boolean immunity) {
+        this.immunity = immunity;
+    }
+
     @Override
     public String toString() {
         return "Servant{" +
                 "hp=" + hp +
                 ", spellPower=" + spellPower +
+                ", immunity=" + immunity +
                 ", shield=" + shield +
                 ", master=" + master +
                 ", child=" + child +
