@@ -11,6 +11,8 @@ hp：生命值
 
 spellPower：法强
 
+immunity：免疫，daidaidai就是免疫
+
 shield：圣盾
 
 master：奴隶主
