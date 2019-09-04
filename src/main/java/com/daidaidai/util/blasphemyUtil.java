@@ -8,14 +8,15 @@ import java.util.List;
 
 public class blasphemyUtil {
 
+    //一方的最大随从数量
     private static final int MAXSIZE = 7;
-
+    //亵渎daidaidai最大执行次数
     private static final int MAXNUM = 14;
-
+    //亵渎的基础伤害
     private static final int XIEDUDAMAGE = 1;
-
+    //daidaidai的基础伤害
     private static final int DAIDAIDAIDAMAGE = 2;
-
+    //奴隶主的基础血量
     private static final int MASTERHP = 3;
 
     public static boolean calculate (Test test) {
