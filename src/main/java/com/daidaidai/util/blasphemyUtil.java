@@ -19,10 +19,13 @@ public class blasphemyUtil {
     //奴隶主的基础血量
     private static final int MASTERHP = 3;
 
+    //计算能否清场
     public static boolean calculate (Test test) {
+        //1表示亵渎2表示带带带
         int type = test.getType();
         List<Servant> oneself = test.getOneself();
         List<Servant> enemy = test.getEnemy();
+        //解光对面场面的标识
         boolean flag = false;
         if (type == 1) {
             flag = xiedu(oneself, enemy);
@@ -32,32 +35,33 @@ public class blasphemyUtil {
         return flag;
     }
 
+    //执行亵渎操作
     private static boolean xiedu (List<Servant> oneself, List<Servant> enemy) {
         int count = MAXNUM;
+        //单次伤害出现随从死亡的标识
         boolean death = false;
         do {
             int damage = XIEDUDAMAGE + getSpellPower(oneself);
-            boolean b1 = calculateOne(damage, oneself);
-            boolean b2 = calculateOne(damage, enemy);
-            death = b1 || b2;
+            death = calculateOne(damage, oneself) || calculateOne(damage, enemy);
             count --;
         } while (death && count >= 1);
         return enemy.size() == 0;
     }
-
+    
+    //执行带带带操作
     private static boolean daidaidai (List<Servant> oneself, List<Servant> enemy) {
         int count = MAXNUM;
+        //单次伤害出现随从死亡的标识
         boolean death = false;
         int damage = DAIDAIDAIDAMAGE;
         do {
-            boolean b1 = calculateOne(damage, oneself);
-            boolean b2 = calculateOne(damage, enemy);
-            death = b1 || b2;
+            death = calculateOne(damage, oneself) || calculateOne(damage, enemy);
             count --;
         } while (death && count >= 1);
         return enemy.size() == 0;
     }
 
+    //计算己方场面的法强
     private static int getSpellPower (List<Servant> oneself) {
         int sp = 0;
         for (Servant servant : oneself) {
@@ -66,10 +70,17 @@ public class blasphemyUtil {
         return sp;
     }
 
+    //执行一次基础的伤害操作
+    //damage    基础的伤害值
+    //one   场面的集合
     private static boolean calculateOne (int damage, List<Servant> one) {
+        //单次伤害出现随从死亡的标识
         boolean death = false;
+        //首先从左至右执行造成伤害操作
         for (Servant servant : one) {
+            //免疫不收伤害
             if (!servant.isImmunity()) {
+                //圣盾免疫该次伤害并将圣盾取消
                 if (!servant.isShield()) {
                     servant.setHp(servant.getHp() - damage);
                 } else {
@@ -77,6 +88,7 @@ public class blasphemyUtil {
                 }
             }
         }
+        //从左至右执行奴隶主生成逻辑
         for (int i = 0; i <= MAXSIZE - 1; i ++) {
             if (i >= one.size()) {
                 break;
@@ -87,6 +99,7 @@ public class blasphemyUtil {
                 one.add(i, new Servant(MASTERHP, 0, false, true));
             }
         }
+        //从左至右执行死亡结算和亡语生儿子操作
         for (int i = 0; i <= MAXSIZE - 1; i ++) {
             if (i > one.size() - 1) {
                 break;
