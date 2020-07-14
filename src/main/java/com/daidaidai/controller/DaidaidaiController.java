@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class DaidaidaiController {
 
     @RequestMapping(value = "test", method = RequestMethod.POST)
-    public JSONObject addMachineSq(@RequestBody Test test) {
+    public JSONObject test(@RequestBody Test test) {
         boolean flag = blasphemyUtil.calculate(test);
         JSONObject json = new JSONObject();
         json.put("flag", flag);
