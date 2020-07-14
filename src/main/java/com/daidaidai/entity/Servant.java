@@ -4,16 +4,22 @@ import java.util.List;
 
 public class Servant {
 
+    //生命值
     private int hp;
 
+    //法强
     private int spellPower;
 
+    //是否具有免疫
     private boolean immunity;
 
+    //是否具有圣盾
     private boolean shield;
 
+    //是否具有奴隶主的效果
     private boolean master;
 
+    //亡语儿子的集合
     private List<Servant> child;
 
     public Servant() {
