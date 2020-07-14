@@ -3,7 +3,7 @@
 <configuration debug="false">
     <!--定义日志文件的存储地址 勿在 LogBack 的配置中使用相对路径-->
     <!--/data/ad/log-->
-    <property name="LOG_HOME" value="/home/lyh/daidaidai/log"/>
+    <property name="LOG_HOME" value="/home/log"/>
     <property name="LOG_NAME" value="daidaidai"/>
 
     <!-- 彩色日志 -->
@@ -65,7 +65,7 @@
 
     <!-- 日志输出级别 -->
     <root level="INFO">
-        <appender-ref ref="STDOUT"/>
+        <!-- <appender-ref ref="STDOUT"/> -->
         <appender-ref ref="FILE"/>
     </root>
     <!--日志异步到数据库 -->
